@@ -14,7 +14,6 @@ let circleRaduis = 50
 let maxRaduis = 1000
 let firstRaduis = 20;
 let reducedRaduisFactor = 125
-const signRand = () => Math.random() > 0.5 ? 1 : -1
 
 const sketch = ({width, height, canvas}) => {
   elCanvas = canvas;
