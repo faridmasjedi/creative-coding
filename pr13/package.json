@@ -1,0 +1,18 @@
+{
+  "name": "pr13",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pr13.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "canvas-sketch": "^0.7.7",
+    "canvas-sketch-util": "^1.10.0",
+    "eases": "^1.0.8"
+  }
+}
