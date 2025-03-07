@@ -1,4 +1,4 @@
-const canvasSketch = require('../pr19/node_modules/canvas-sketch/dist/canvas-sketch.umd');
+const canvasSketch = require("../pr19/node_modules/canvas-sketch/dist/canvas-sketch.umd");
 
 const settings = {
   dimensions: [2048, 2048],
@@ -20,18 +20,18 @@ const sketch = ({ width, height, canvas }) => {
   elCanvas = canvas;
 
   // Handle image upload
-  const fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = 'image/*';
-  fileInput.style.position = 'absolute';
-  fileInput.style.top = '10px';
-  fileInput.style.left = '10px';
-  fileInput.style.zIndex = '10';
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
+  fileInput.style.position = "absolute";
+  fileInput.style.top = "10px";
+  fileInput.style.left = "10px";
+  fileInput.style.zIndex = "10";
   document.body.appendChild(fileInput);
 
-  fileInput.addEventListener('change', handleImageUpload);
+  fileInput.addEventListener("change", handleImageUpload);
 
-  canvas.addEventListener('mousedown', mouseHandler);
+  canvas.addEventListener("mousedown", mouseHandler);
 
   for (let r = circleRadius; r <= maxRadius; r += circleRadius) {
     const circleNum = Math.floor(r / firstRadius);
@@ -51,7 +51,7 @@ const sketch = ({ width, height, canvas }) => {
   }
 
   return ({ context, width, height }) => {
-    context.fillStyle = 'black';
+    context.fillStyle = "black";
     context.fillRect(0, 0, width, height);
 
     particles.forEach((p) => {
@@ -68,8 +68,8 @@ class Particle {
     this.r = r;
     this.w = w;
     this.h = h;
-    this.color = 'white';
-    this.iColor = 'white';
+    this.color = "white";
+    this.iColor = "white";
 
     this.ix = x;
     this.iy = y;
@@ -110,16 +110,22 @@ class Particle {
     context.clip();
 
     // Calculate relative positions in the image
-    const sx = (this.x + this.w) / elCanvas.width * image.width;
-    const sy = (this.y + this.h) / elCanvas.height * image.height;
+    const sx = ((this.x + this.w) / elCanvas.width) * image.width;
+    const sy = ((this.y + this.h) / elCanvas.height) * image.height;
     const sw = image.width / 10; // Take a smaller slice
     const sh = image.height / 10;
 
     // Stretch that slice to fit the circle
     context.drawImage(
       image,
-      sx, sy, sw, sh, // Source
-      this.x - this.r, this.y - this.r, this.r * 2, this.r * 2 // Destination
+      sx,
+      sy,
+      sw,
+      sh, // Source
+      this.x - this.r,
+      this.y - this.r,
+      this.r * 2,
+      this.r * 2 // Destination
     );
 
     context.restore();
@@ -147,7 +153,7 @@ class Particle {
     if (dd < this.minDist) {
       this.ax += (dx / dd) * distDelta * this.pushFactor;
       this.ay += (dy / dd) * distDelta * this.pushFactor;
-      if (!imageLoaded) this.updateColor(dx, dy , distDelta)
+      if (!imageLoaded) this.updateColor(dx, dy, distDelta);
     }
 
     this.vx = (this.vx + this.ax) * this.dempFactor;
@@ -155,21 +161,20 @@ class Particle {
 
     this.x += this.vx;
     this.y += this.vy;
-    
   }
 
-  updateColor(dx, dy , distDelta){
-    const r = Math.floor(Math.random() * dx)
-    const b = Math.floor(Math.random() * dy)
-    const g = Math.floor(Math.random() * Math.abs(distDelta))
-    this.color = `rgba(${r}, ${g}, ${b})`
+  updateColor(dx, dy, distDelta) {
+    const r = Math.floor(Math.random() * dx);
+    const b = Math.floor(Math.random() * dy);
+    const g = Math.floor(Math.random() * Math.abs(distDelta));
+    this.color = `rgba(${r}, ${g}, ${b})`;
   }
 }
 
 // Handle mouse movement
 const mouseHandler = (e) => {
-  window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('mouseup', onMouseUp);
+  window.addEventListener("mousemove", onMouseMove);
+  window.addEventListener("mouseup", onMouseUp);
   onMouseMove(e);
 };
 
@@ -181,8 +186,8 @@ const onMouseMove = (e) => {
 };
 
 const onMouseUp = () => {
-  window.removeEventListener('mousemove', onMouseMove);
-  window.removeEventListener('mouseup', onMouseUp);
+  window.removeEventListener("mousemove", onMouseMove);
+  window.removeEventListener("mouseup", onMouseUp);
   cursor.x = 9999;
   cursor.y = 9999;
 };
@@ -201,6 +206,6 @@ const handleImageUpload = (event) => {
     image.src = e.target.result;
   };
   reader.readAsDataURL(file);
-}
+};
 
 canvasSketch(sketch, settings);

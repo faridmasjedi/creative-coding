@@ -2,7 +2,7 @@ const canvasSketch = require("../pr19/node_modules/canvas-sketch/dist/canvas-ske
 
 const settings = {
   dimensions: [2048, 2048],
-  animate: true
+  animate: true,
 };
 
 const radDeg = (angle) => (Math.PI / 180) * angle;
@@ -27,7 +27,7 @@ const infoObj = {
   rectStroke: randomRGBA(),
   rectShadow: randomRGBA(),
   background: randomRGBA(),
-  blend: randomNumber(1) < 0.5 ? 'overlay' : 'source-over'
+  blend: randomNumber(1) < 0.5 ? "overlay" : "source-over",
 };
 
 const sketch = ({ width, height }) => {
@@ -35,7 +35,7 @@ const sketch = ({ width, height }) => {
     radius: infoObj.radius,
     slides: infoObj.slides,
   });
-  
+
   let pointObj = rectPoints({
     width,
     height,
@@ -44,11 +44,10 @@ const sketch = ({ width, height }) => {
   });
 
   return ({ context, width, height, frame }) => {
-    
-    resetBackground({context, width, height})
+    resetBackground({ context, width, height });
     drawPolygon({ context, width, height, pointsArray: polygonPointsArray });
     drawRects({ context, rectPoints: pointObj });
-    pointObj = motionRefresh(width, height, frame, pointObj)
+    pointObj = motionRefresh(width, height, frame, pointObj);
   };
 };
 
@@ -98,13 +97,12 @@ const drawRect = (x, y, w, h, rh, context) => {
 
 const drawRects = ({ context, rectPoints }) => {
   for (let key in rectPoints) {
-    context.globalCompositeOperation = infoObj.blend
+    context.globalCompositeOperation = infoObj.blend;
 
     const { x, y, w, h, rh } = rectPoints[key];
     drawRect(x, y, w, h, rh, context);
 
-    context.globalCompositeOperation = 'source-over'
-
+    context.globalCompositeOperation = "source-over";
   }
 };
 
@@ -126,46 +124,46 @@ const polygonPoints = ({ radius, slides }) => {
 };
 
 const drawPolygon = ({ context, width, height, pointsArray }) => {
-
   context.save();
   context.translate(width / 2, height / 2);
-  context.rotate(radDeg(infoObj.polygonAngle))
+  context.rotate(radDeg(infoObj.polygonAngle));
   context.lineWidth = "20";
   context.beginPath();
   context.moveTo(pointsArray[0].x, pointsArray[0].y);
 
   for (let i = 1; i < pointsArray.length; i++) {
     const nextP = pointsArray[i];
-    context.lineTo(nextP.x, nextP.y);  
+    context.lineTo(nextP.x, nextP.y);
   }
-  context.closePath()
+  context.closePath();
   context.stroke();
   context.restore();
   context.clip();
 };
 
-const resetBackground = ({context, width, height}) => {
+const resetBackground = ({ context, width, height }) => {
   context.fillStyle = infoObj.background;
   context.fillRect(0, 0, width, height);
-}
+};
 
 const motionRefresh = (width, height, frame, pointObj) => {
-  if (frame % 20 === 0 && infoObj.polygonAnimateRotate ) infoObj.polygonAngle += 1
+  if (frame % 20 === 0 && infoObj.polygonAnimateRotate)
+    infoObj.polygonAngle += 1;
   if (frame % 50 !== 0) return pointObj;
 
-  infoObj.rectFill = randomRGBA()
-  infoObj.rectStroke = randomRGBA()
-  infoObj.rectShadow = randomRGBA()
-  infoObj.background = randomRGBA()
-  infoObj.blend = randomNumber(1) < 0.5 ? 'overlay' : 'source-over'
+  infoObj.rectFill = randomRGBA();
+  infoObj.rectStroke = randomRGBA();
+  infoObj.rectShadow = randomRGBA();
+  infoObj.background = randomRGBA();
+  infoObj.blend = randomNumber(1) < 0.5 ? "overlay" : "source-over";
   pointObj = rectPoints({
     width,
     height,
     angle: infoObj.rectAngle,
     num: infoObj.num,
   });
-  
-  return pointObj
-} 
+
+  return pointObj;
+};
 
 canvasSketch(sketch, settings);

@@ -57,7 +57,6 @@ const sketch = () => {
     });
     // context.clip();
 
-    
     drawInsiders({
       context,
       width,
@@ -67,8 +66,8 @@ const sketch = () => {
       lw: insiderInfo.lw,
       xx: 0,
     });
-    context.restore()
-    
+    context.restore();
+
     // drawInsiders({context, width, height, r: polygonInfo.raduis, rotateTetha: -Math.PI/4})
   };
 };
@@ -97,14 +96,11 @@ const drawPolygon = ({
   lw,
   xx,
 }) => {
-  
   for (let i = 0; i < pointsArray.length; i++) {
     const currentP = pointsArray[i];
     const nextP =
       i === pointsArray.length - 1 ? pointsArray[0] : pointsArray[i + 1];
 
-    
-    
     context.save();
     context.translate(width / 2, height / 2);
 
@@ -114,7 +110,7 @@ const drawPolygon = ({
     context.moveTo(currentP.x + xx, currentP.y);
     context.lineTo(nextP.x + xx, nextP.y);
     context.stroke();
-    context.restore()
+    context.restore();
   }
   // context.restore()
 };
@@ -134,7 +130,6 @@ const drawPolygon = ({
 //   context.restore();
 // };
 
-
 const drawInsiders = ({
   context,
   width,
@@ -145,13 +140,13 @@ const drawInsiders = ({
   xx,
 }) => {
   for (let key in insiderPointsObject) {
-    const pointsArray = insiderPointsObject[key]
+    const pointsArray = insiderPointsObject[key];
     context.save();
     context.translate(width / 2, height / 2);
 
     context.rotate(-Math.PI / 2 + rotateTetha);
     context.lineWidth = lw;
-    context.fillStyle = 'red'
+    context.fillStyle = "red";
     context.beginPath();
     for (let i = 0; i < pointsArray.length; i++) {
       const currentP = pointsArray[i];
@@ -161,7 +156,7 @@ const drawInsiders = ({
       context.lineTo(nextP.x + xx, nextP.y);
       context.stroke();
     }
-    context.fill()
+    context.fill();
     context.restore();
   }
   context.restore();
